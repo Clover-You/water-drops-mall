@@ -1,6 +1,11 @@
 spring:
+  profiles:
+    active: dev
   config:
-    import: optional:nacos:mall-product.yml
+    import:
+      - optional:nacos:mall-product.yml
+      - optional:nacos:mybatis.yaml
+      - optional:nacos:datasource.yml
   application:
     name: mall-product
   cloud:
@@ -9,4 +14,11 @@ spring:
         server-addr: localhost:8848
       config:
         server-addr: localhost:8848
+        namespace: 4b3b4188-ebd4-45ff-835a-107624319bd6
         group: dev
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Dao.xml
+  global-config:
+    db-config:
+      id-type: auto
