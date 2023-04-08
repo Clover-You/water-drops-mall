@@ -1,0 +1,15 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: mall-gateway
+  config:
+    import: optional:nacos:mall-gateway.yml
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${water.nacos.server-addr}
+      config:
+        server-addr: ${water.nacos.server-addr}
+        group: dev
+        namespace: ed8d7302-6bc3-41d1-9274-ff7a88d3be0a

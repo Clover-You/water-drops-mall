@@ -1,4 +1,8 @@
 
+water:
+  nacos:
+    server-addr: 127.0.0.1:8848
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*Dao.xml
   global-config:
