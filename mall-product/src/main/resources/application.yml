@@ -11,9 +11,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: ${water.nacos.server-addr}
       config:
-        server-addr: localhost:8848
+        server-addr: ${water.nacos.server-addr}
         namespace: 4b3b4188-ebd4-45ff-835a-107624319bd6
         group: dev
 
