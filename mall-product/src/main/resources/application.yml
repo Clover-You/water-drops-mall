@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   profiles:
     active: dev
   config:
@@ -16,9 +19,14 @@ spring:
         server-addr: ${water.nacos.server-addr}
         namespace: 4b3b4188-ebd4-45ff-835a-107624319bd6
         group: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/water_drops_pms
+    username: root
+    password: root
 
 mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*Dao.xml
+  mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto

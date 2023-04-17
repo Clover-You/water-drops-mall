@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.ctong.mall.product.webApi.dao.CategoryDao">
+
+    <resultMap id="CategoryEntity" type="top.ctong.mall.common.models.entity.CategoryEntity">
+        <id property="catId" column="cat_id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentCid" column="parent_cid" jdbcType="BIGINT"/>
+        <result property="catLevel" column="cat_level" jdbcType="INTEGER"/>
+        <result property="showStatus" column="show_status" jdbcType="TINYINT"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="productUnit" column="product_unit" jdbcType="VARCHAR"/>
+        <result property="productCount" column="product_count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="CategoryTree" type="top.ctong.mall.common.models.CategoryTree" extends="CategoryEntity">
+        <result property="parentId" column="parent_cid"/>
+        <result property="id" column="cat_id"/>
+    </resultMap>
+
+    <sql id="ALL_FIELD">
+        cat_id, name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count
+    </sql>
+
+    <select id="list" resultMap="CategoryTree">
+        select <include refid="ALL_FIELD"/> from pms_category
+    </select>
+
+    <select id="tree" resultMap="CategoryTree" >
+        select <include refid="ALL_FIELD"/> from pms_category
+    </select>
+
+</mapper>
+
