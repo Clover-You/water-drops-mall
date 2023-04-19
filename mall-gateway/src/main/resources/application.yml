@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 88
 spring:
   application:
     name: mall-gateway
@@ -13,3 +13,21 @@ spring:
         server-addr: ${water.nacos.server-addr}
         group: dev
         namespace: ed8d7302-6bc3-41d1-9274-ff7a88d3be0a
+    loadbalancer:
+      nacos:
+        enabled: on
+    gateway:
+      routes:
+        - id: test_route
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        - id: product_router
+          uri: lb://mall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/product/(?<path>.*),/$\{path}
+logging:
+  level:
+    top.ctong.mall.gateway: debug

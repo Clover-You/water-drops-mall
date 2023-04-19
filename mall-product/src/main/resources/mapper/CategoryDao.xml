@@ -24,6 +24,13 @@
         cat_id, name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count
     </sql>
 
+    <update id="delete">
+        update pms_category set show_status = 0 where cat_id in
+        <foreach collection="ids" item="it" separator="," open="(" close=")">
+            #{it}
+        </foreach>
+    </update>
+
     <select id="list" resultMap="CategoryTree">
         select <include refid="ALL_FIELD"/> from pms_category
     </select>

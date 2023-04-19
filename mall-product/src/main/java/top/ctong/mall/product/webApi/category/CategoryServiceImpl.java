@@ -38,6 +38,20 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryListWithTree(list, 0L);
     }
 
+    /**
+     * 通过分类id批量删除分类
+     *
+     * @param ids 分类id列表
+     * @return int
+     * @author Clover You
+     * @date 2023/4/18 23:45
+     */
+    @Override
+    public int delete(List<Integer> ids) {
+        // todo 检查分类是否在别处被引用了
+        return categoryDao.delete(ids);
+    }
+
     private <T extends TreeNode<T, ?>> List<T> categoryListWithTree(List<T> list, Object rootId) {
         Map<Object, List<T>> tem = new HashMap<>(list.size());
         Map<Object, T> root = new HashMap<>(list.size());

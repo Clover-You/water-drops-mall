@@ -3,6 +3,7 @@ package top.ctong.mall.product.webApi.category;
 import top.ctong.mall.common.models.CategoryTree;
 import top.ctong.mall.common.models.TreeNode;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -24,5 +25,14 @@ public interface CategoryService {
      * @date 2023/4/8 19:03
      */
     List<CategoryTree> listWithTree();
+
+    /** 
+     * 通过分类id批量删除分类
+     * @param ids 分类id列表
+     * @return int 
+     * @author Clover You 
+     * @date 2023/4/18 23:45
+     */
+    int delete(@NotNull List<Integer> ids);
 
 }

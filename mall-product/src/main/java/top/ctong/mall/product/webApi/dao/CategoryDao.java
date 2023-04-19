@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import top.ctong.mall.common.models.CategoryTree;
 import top.ctong.mall.common.models.entity.CategoryEntity;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -28,5 +29,14 @@ public interface CategoryDao {
     List<CategoryEntity> list();
 
     List<CategoryTree> tree();
+
+    /**
+     * 通过分类id批量删除分类
+     * @param ids 分类id
+     * @return int
+     * @author Clover You
+     * @date 2023/4/18 23:47
+     */
+    int delete(@NotNull List<Integer> ids);
 
 }
