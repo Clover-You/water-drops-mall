@@ -31,8 +31,12 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+# 日志级别
 logging:
   level:
     top.ctong.mall.gateway: debug
+
+# 服务端口
 server:
   port: 9090
