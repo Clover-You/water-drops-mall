@@ -1,5 +1,7 @@
 package top.ctong.mall.common.utils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.models.auth.In;
 import lombok.Data;
 
@@ -21,6 +23,7 @@ public class R<T> implements Serializable {
 
     private String message;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     private R(String code, String message, T data) {

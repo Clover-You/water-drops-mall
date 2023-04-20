@@ -1,3 +1,4 @@
 top.ctong.mall.common.auto.RespBodyAdviceAutoConfiguration
 top.ctong.mall.common.auto.ControllerExceptionHandlerAutoConfiguration
 top.ctong.mall.common.auto.GlobalPropertiesAutoConfiguration
+top.ctong.mall.common.auto.WaterAutoConfiguration
