@@ -2,7 +2,7 @@ package top.ctong.mall.common.auto;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import top.ctong.mall.common.RespBodyAdviceConfig;
+import top.ctong.mall.common.config.RespBodyAdviceConfig;
 
 /**
  * <p>

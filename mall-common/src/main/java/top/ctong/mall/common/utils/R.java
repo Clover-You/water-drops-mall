@@ -22,6 +22,38 @@ public class R<T> implements Serializable {
 
     private T data;
 
-    private R() {}
+    private R(String code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    /**
+     * 响应成功
+     *
+     * @param code    成功状态码
+     * @param message 请求状态消息
+     * @param data    数据
+     * @return R<T>
+     * @author Clover You
+     * @date 2023/4/20 21:53
+     */
+    public static <T> R<T> ok(String code, String message, T data) {
+        return new R<>(code, message, data);
+    }
+
+    /**
+     * 响应成功
+     *
+     * @param code    成功状态码
+     * @param message 请求状态消息
+     * @param data    数据
+     * @return R<T>
+     * @author Clover You
+     * @date 2023/4/20 21:53
+     */
+    public static <T> R<T> ok(int code, String message, T data) {
+        return R.ok(Integer.toString(code), message, data);
+    }
 
 }

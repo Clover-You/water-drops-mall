@@ -1,5 +1,7 @@
 package top.ctong.mall.common.config;
 
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -7,6 +9,10 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import top.ctong.mall.common.itfs.IgnoreWrapper;
+import top.ctong.mall.common.utils.R;
+
+import java.util.Objects;
 
 /**
  * <p>
@@ -20,18 +26,26 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @RestControllerAdvice
 public class RespBodyAdviceConfig implements ResponseBodyAdvice<Object> {
 
-    public RespBodyAdviceConfig() {
-        System.out.println("ss");
-    }
-
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return false;
+        return !returnType.hasMethodAnnotation(IgnoreWrapper.class);
     }
 
+    @SneakyThrows
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        return null;
+        if (!MediaType.APPLICATION_JSON.equals(selectedContentType) || body instanceof R) {
+            return body;
+        }
+
+        Object resp = R.ok(20000, "successful", body);
+
+        if (body instanceof String) {
+            // 注意如果是字符串的话，那么返回值的MessageConverter 是字符串的处理器，需要将JSON 转为String
+            JsonMapper jsonMapper = new JsonMapper();
+            resp = jsonMapper.writeValueAsString(resp);
+        }
+        return resp;
     }
 
 }
