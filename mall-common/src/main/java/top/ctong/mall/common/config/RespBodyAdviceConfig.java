@@ -27,6 +27,10 @@ import java.util.Objects;
 @RestControllerAdvice
 public class RespBodyAdviceConfig implements ResponseBodyAdvice<Object> {
 
+    public RespBodyAdviceConfig() {
+        System.out.println("RespBodyAdviceConfig");
+    }
+
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return !returnType.hasMethodAnnotation(IgnoreWrapper.class);
