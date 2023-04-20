@@ -4,8 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.ctong.mall.common.models.CategoryTree;
 import top.ctong.mall.common.config.valid.UpdateGroup;
+import top.ctong.mall.common.models.CategoryTree;
+import top.ctong.mall.common.models.dto.product.CategorySaveDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +71,7 @@ public class CategoryController {
      */
     @PostMapping("/save")
     public void save(@RequestBody @Validated({UpdateGroup.class}) CategorySaveDto dto) {
-
+        categoryService.save(dto);
     }
 
 }

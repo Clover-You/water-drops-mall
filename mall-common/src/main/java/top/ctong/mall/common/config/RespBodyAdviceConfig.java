@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import top.ctong.mall.common.itfs.IgnoreWrapper;
 import top.ctong.mall.common.utils.R;
+import top.ctong.mall.common.utils.RespStatus;
 
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ public class RespBodyAdviceConfig implements ResponseBodyAdvice<Object> {
             return body;
         }
 
-        Object resp = R.ok(20000, "successful", body);
+        Object resp = R.ok(RespStatus.OK.getCode(), RespStatus.OK.getMessage(), body);
 
         if (body instanceof String) {
             // 注意如果是字符串的话，那么返回值的MessageConverter 是字符串的处理器，需要将JSON 转为String

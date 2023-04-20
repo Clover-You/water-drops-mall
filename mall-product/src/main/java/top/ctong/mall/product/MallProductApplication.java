@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import top.ctong.mall.common.RespBodyAdviceConfig;
+import top.ctong.mall.common.config.RespBodyAdviceConfig;
 
 @MapperScan("top.ctong.mall.product.webApi.dao")
 @ImportAutoConfiguration(RespBodyAdviceConfig.class)

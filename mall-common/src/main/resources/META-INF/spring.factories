@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  top.ctong.mall.common.auto.RespBodyAdviceAutoConfiguration
+  top.ctong.mall.common.auto.RespBodyAdviceAutoConfiguration\
+  top.ctong.mall.common.auto.GlobalPropertiesAutoConfiguration

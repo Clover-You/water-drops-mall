@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -20,6 +21,8 @@ import java.io.Serializable;
 @ApiModel("分类保存请求参数")
 @Data
 public class CategorySaveDto implements Serializable {
+
+    private static final long serialVersionUID = 8793078653965022744L;
 
     /**
      * 分类名称
@@ -39,7 +42,7 @@ public class CategorySaveDto implements Serializable {
      * 层级
      */
     @ApiModelProperty("层级")
-    @Min(value = 0, message = "分类层级异常")
+    @Min(value = 1, message = "分类层级异常")
     private Integer catLevel;
 
     /**
@@ -55,12 +58,11 @@ public class CategorySaveDto implements Serializable {
     @Min(value = 0, message = "分类排序标识异常")
     private Integer sort;
 
-    private Long parentCid() {
-        return parentCid == null ? 0 : parentCid;
+    public Long getParentCid() {
+        return parentCid == null ? (parentCid = 0L) : parentCid;
     }
 
-    private Integer getSort() {
-        return sort == null ? 1 : sort;
+    public Integer getCatLevel() {
+        return catLevel == null ? (catLevel = 1) : catLevel;
     }
-
 }

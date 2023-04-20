@@ -15,6 +15,17 @@
         <result property="productCount" column="product_count" jdbcType="INTEGER"/>
     </resultMap>
 
+    <parameterMap id="CategoryEntity" type="top.ctong.mall.common.models.entity.CategoryEntity">
+        <parameter property="catId" jdbcType="BIGINT"/>
+        <parameter property="name" jdbcType="VARCHAR"/>
+        <parameter property="parentCid" jdbcType="BIGINT"/>
+        <parameter property="catLevel" jdbcType="INTEGER"/>
+        <parameter property="showStatus" jdbcType="TINYINT"/>
+        <parameter property="sort" jdbcType="INTEGER"/>
+        <parameter property="productUnit" jdbcType="VARCHAR"/>
+        <parameter property="productCount" jdbcType="INTEGER"/>
+    </parameterMap>
+
     <resultMap id="CategoryTree" type="top.ctong.mall.common.models.CategoryTree" extends="CategoryEntity">
         <result property="parentId" column="parent_cid"/>
         <result property="id" column="cat_id"/>
@@ -24,19 +35,67 @@
         cat_id, name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count
     </sql>
 
-    <update id="delete">
+    <sql id="ALL_FIELD_IGNORE_ID">
+        name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count
+    </sql>
+
+    <update id="delete" parameterMap="CategoryEntity">
         update pms_category set show_status = 0 where cat_id in
         <foreach collection="ids" item="it" separator="," open="(" close=")">
             #{it}
         </foreach>
     </update>
 
+    <update id="updateSortByStep">
+        update pms_category set sort = sort + #{step} where cat_id in
+        <foreach collection="ids" open="(" close=")" item="id" separator=","> #{id} </foreach>
+    </update>
+
+    <insert id="save" useGeneratedKeys="false" keyProperty="catId" keyColumn="cat_id" parameterMap="CategoryEntity">
+        insert into pms_category(name, parent_cid, cat_level, show_status, sort, icon, product_unit, product_count)
+            value (#{category.name}, #{category.parentCid}, #{category.catLevel}, #{category.showStatus},
+                   #{category.sort}, #{category.icon}, #{category.productUnit}, #{category.productCount})
+    </insert>
+
     <select id="list" resultMap="CategoryTree">
-        select <include refid="ALL_FIELD"/> from pms_category
+        select
+        <include refid="ALL_FIELD"/>
+        from pms_category
     </select>
 
-    <select id="tree" resultMap="CategoryTree" >
-        select <include refid="ALL_FIELD"/> from pms_category
+    <select id="tree" resultMap="CategoryTree">
+        select
+        <include refid="ALL_FIELD"/>
+        from pms_category
+    </select>
+
+    <select id="exists" resultType="boolean">
+        select count(cat_id) as exist
+        from pms_category
+        where cat_id = #{catId}
+    </select>
+    <select id="nameExistUnderSameLevel" resultType="boolean">
+        select count(cat_id)
+        from pms_category
+        where parent_cid = #{pid}
+          and cat_level = #{level}
+          and name = #{name}
+    </select>
+
+    <select id="getLeafCount" resultType="int">
+        select count(cat_id)
+        from pms_category
+        where parent_cid = #{pId}
+          and cat_level = #{level}
+    </select>
+
+    <select id="getGreaterSortLeafList" resultType="long">
+        select cat_id
+        from pms_category
+        where parent_cid = #{pId}
+          and cat_level = #{level}
+          and sort >= #{sort}
+        order by sort
     </select>
 
 </mapper>
