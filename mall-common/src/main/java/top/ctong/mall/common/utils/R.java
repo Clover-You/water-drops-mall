@@ -1,5 +1,6 @@
 package top.ctong.mall.common.utils;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -54,6 +55,33 @@ public class R<T> implements Serializable {
      */
     public static <T> R<T> ok(int code, String message, T data) {
         return R.ok(Integer.toString(code), message, data);
+    }
+
+    /**
+     * 响应错误
+     *
+     * @param code    错误状态吗
+     * @param message 错误信息
+     * @param data    错误响应数据
+     * @return R<T>
+     * @author Clover You
+     * @date 2023/4/21 00:14
+     */
+    public static <T> R<T> fail(String code, String message, T data) {
+        return new R<>(code, message, data);
+    }
+
+    /**
+     * 响应错误
+     *
+     * @param code    错误状态吗
+     * @param message 错误信息
+     * @return R<Void>
+     * @author Clover You
+     * @date 2023/4/21 00:15
+     */
+    public static R<Void> fail(int code, String message) {
+        return R.fail(Integer.toString(code), message, null);
     }
 
 }

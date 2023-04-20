@@ -16,6 +16,8 @@ public enum RespStatus {
 
     OK("20000", "successful"),
 
+    FAIL("50000", "system fail"),
+
     // ================== 商品服务 ================== //
     PRODUCT_CATEGORY_SAVE_NOT_EXIST("1010001", "父分类不存在"),
 
