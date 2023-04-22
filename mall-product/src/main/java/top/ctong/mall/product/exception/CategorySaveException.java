@@ -1,6 +1,5 @@
 package top.ctong.mall.product.exception;
 
-import top.ctong.mall.common.exception.BaseException;
 import top.ctong.mall.common.utils.RespStatus;
 
 /**
@@ -12,7 +11,7 @@ import top.ctong.mall.common.utils.RespStatus;
  * @email cloveryou02@163.com
  * @create 2023-04-20 22:19
  */
-public class CategorySaveException extends BaseException {
+public class CategorySaveException extends CategoryException {
 
     private static final long serialVersionUID = 2238303234783057918L;
 

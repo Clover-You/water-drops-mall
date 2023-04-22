@@ -48,7 +48,38 @@
 
     <update id="updateSortByStep">
         update pms_category set sort = sort + #{step} where cat_id in
-        <foreach collection="ids" open="(" close=")" item="id" separator=","> #{id} </foreach>
+        <foreach collection="ids" open="(" close=")" item="id" separator=","> #{id} </foreach> and sort > 0
+    </update>
+
+    <update id="update" parameterMap="CategoryEntity">
+        update pms_category
+        <set>
+            <if test="category.name != null">
+                name = #{category.name},
+            </if>
+            <if test="category.parentCid != null">
+                parent_cid = #{category.parentCid},
+            </if>
+            <if test="category.catLevel != null">
+                cat_level = #{category.catLevel},
+            </if>
+            <if test="category.showStatus != null">
+                show_status = #{category.showStatus},
+            </if>
+            <if test="category.sort != null">
+                sort = #{category.sort},
+            </if>
+            <if test="category.icon != null">
+                icon = #{category.icon},
+            </if>
+            <if test="category.productUnit != null">
+                product_unit = #{category.productUnit},
+            </if>
+            <if test="category.productCount != null">
+                product_count = #{category.productCount},
+            </if>
+        </set>
+        where cat_id = #{category.catId}
     </update>
 
     <insert id="save" useGeneratedKeys="false" keyProperty="catId" keyColumn="cat_id" parameterMap="CategoryEntity">
@@ -80,6 +111,9 @@
         where parent_cid = #{pid}
           and cat_level = #{level}
           and name = #{name}
+          <if test="ignore != null">
+              and cat_id != #{ignore}
+          </if>
     </select>
 
     <select id="getLeafCount" resultType="int">
@@ -94,8 +128,20 @@
         from pms_category
         where parent_cid = #{pId}
           and cat_level = #{level}
-          and sort >= #{sort}
+          <if test="endSort !=null">
+            and sort between #{sort} and #{endSort}
+          </if>
+          <if test="endSort ==null">
+            and sort >= #{sort}
+          </if>
+          <if test="ignore != null">
+              and cat_id != #{ignore}
+          </if>
         order by sort
+    </select>
+
+    <select id="info" resultMap="CategoryEntity">
+        select <include refid="ALL_FIELD" /> from pms_category where cat_id = #{catId}
     </select>
 
 </mapper>

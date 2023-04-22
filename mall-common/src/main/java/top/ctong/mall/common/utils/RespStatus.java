@@ -18,10 +18,18 @@ public enum RespStatus {
 
     FAIL("50000", "system fail"),
 
+    BAD_REQUEST("10400", "bad request"),
+
     // ================== 商品服务 ================== //
     PRODUCT_CATEGORY_SAVE_NOT_EXIST("1010001", "父分类不存在"),
 
-    PRODUCT_CATEGORY_SAVE_NAME_ALREADY_EXISTS("1010002", "分类名称不能重复");
+    PRODUCT_CATEGORY_SAVE_NAME_ALREADY_EXISTS("1010002", "分类名称不能重复"),
+
+    PRODUCT_CATEGORY_QUERY_CATEGORY_NOT_EXIST("1010003", "分类不存在"),
+
+    PRODUCT_CATEGORY_UPDATE_PARENT_NO_FOUND("1010004", "父级分类不存在"),
+
+    PRODUCT_CATEGORY_UPDATE_ALREADY_EXIST_NAME("1010005", "分类名称不能重复");
 
     private final String code;
 

@@ -2,6 +2,7 @@ package top.ctong.mall.common.models.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,9 +20,12 @@ import java.io.Serializable;
 @ApiModel("分类实体")
 public class CategoryEntity implements Serializable {
 
+    private static final long serialVersionUID = 4718319452803138781L;
+
     /**
      * 分类id
      */
+    @NotNull(message = "分类id不能为空")
     @ApiModelProperty("分类ID")
     private Long catId;
 

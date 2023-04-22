@@ -64,15 +64,16 @@ public interface CategoryDao {
     /**
      * 查询同层级下是否存在指定名称
      *
-     * @param name  分类名称
-     * @param pid   父级id
-     * @param level 分类层级
+     * @param name   分类名称
+     * @param pid    父级id
+     * @param level  分类层级
+     * @param ignore 忽略查询的id
      * @return boolean
      * @author Clover You
      * @date 2023/4/20 23:35
      */
     boolean nameExistUnderSameLevel(@NotNull @Param("name") String name, @NotNull @Param("pid") Long pid,
-                                    @NotNull @Param("level") Integer level);
+                                    @NotNull @Param("level") Integer level, @Param("ignore") Long ignore);
 
     /**
      * 查询所有同级的节点数
@@ -88,15 +89,18 @@ public interface CategoryDao {
     /**
      * 获取同级菜单排序大于指定排序的菜单id
      *
-     * @param pId   父级id
-     * @param level 层级
-     * @param sort  排序
+     * @param pId     父级id
+     * @param level   层级
+     * @param sort    排序
+     * @param endSort 排序结束范围
+     * @param ignore  忽略指定id
      * @return List<Long>
      * @author Clover You
      * @date 2023/4/20 23:45
      */
     List<Long> getGreaterSortLeafList(@NotNull @Param("pId") Long pId, @NotNull @Param("level") Integer level,
-                                      @NotNull @Param("sort") Integer sort);
+                                      @NotNull @Param("sort") Integer sort, @NotNull @Param("endSort") Integer endSort,
+                                      @Param("ignore") Long ignore);
 
     /**
      * 根据指定步长修改分类排序
@@ -108,5 +112,25 @@ public interface CategoryDao {
      * @date 2023/4/20 23:55
      */
     int updateSortByStep(@NotNull @Param("ids") List<Long> ids, @NotNull @Param("step") int step);
+
+    /**
+     * 根据分类id获取分类信息
+     *
+     * @param catId 分类id
+     * @return CategoryEntity
+     * @author Clover You
+     * @date 2023/4/22 21:14
+     */
+    CategoryEntity info(@NotNull @Param("catId") Long catId);
+
+    /**
+     * 保存修改
+     *
+     * @param category 修改的数据
+     * @return int
+     * @author Clover You
+     * @date 2023/4/23 00:08
+     */
+    int update(@NotNull @Param("category") CategoryEntity category);
 
 }

@@ -1,5 +1,6 @@
 package top.ctong.mall.common.auto;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ import top.ctong.mall.common.config.ControllerAdviceImpl;
 @Configuration
 public class ControllerExceptionHandlerAutoConfiguration {
 
+    @ConditionalOnClass(HttpServletResponse.class)
     @Bean
     public ControllerAdviceImpl controllerAdvice() {
         return new ControllerAdviceImpl();

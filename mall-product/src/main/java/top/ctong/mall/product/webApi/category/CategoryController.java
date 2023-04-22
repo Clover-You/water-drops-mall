@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import top.ctong.mall.common.config.valid.UpdateGroup;
 import top.ctong.mall.common.models.CategoryTree;
 import top.ctong.mall.common.models.dto.product.CategorySaveDto;
+import top.ctong.mall.common.models.entity.CategoryEntity;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,6 +74,23 @@ public class CategoryController {
     @PostMapping("/save")
     public void save(@RequestBody @Validated({UpdateGroup.class}) CategorySaveDto dto) {
         categoryService.save(dto);
+    }
+
+    /**
+     * 通过分类id获取分类信息
+     *
+     * @param catId 分类id
+     * @author Clover You
+     * @date 2023/4/22 21:07
+     */
+    @RequestMapping("/info/{catId}")
+    public CategoryEntity info(@PathVariable("catId") Long catId) {
+        return categoryService.info(catId);
+    }
+
+    @PostMapping("/update")
+    public void update(@RequestBody @Validated CategoryEntity category) {
+        categoryService.update(category);
     }
 
 }
