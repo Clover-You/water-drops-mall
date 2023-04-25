@@ -281,4 +281,50 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDao.update(category);
     }
 
+    /**
+     * 修改分类排序
+     *
+     * @param catId 分类id
+     * @param sort  排序
+     * @return int
+     * @author Clover You
+     * @date 2023/4/25 20:52
+     */
+    @Override
+    public int updateSort(Long catId, Integer sort) {
+        CategoryEntity catInfo = info(catId);
+        if (catInfo == null) {
+            throw new CategoryUpdateException(RespStatus.PRODUCT_CATEGORY_QUERY_CATEGORY_NOT_EXIST);
+        }
+        if (Objects.equals(catInfo.getSort(), sort)) {
+            return 0;
+        }
+        int leafCount = getLeafCount(catInfo.getParentCid(), catInfo.getCatLevel());
+        int targetSort = sort;
+        if (leafCount == 0) {
+            targetSort = 1;
+        } else if (sort > leafCount) {
+            targetSort = leafCount + 1;
+        } else {
+            int offset = sort - catInfo.getSort();
+            Integer startSort = offset > 0 ? catInfo.getSort() : sort;
+            Integer endSort = offset > 0 ? sort : catInfo.getSort();
+
+            List<Long> leafList = getGreaterSortLeafList(
+                catInfo.getParentCid(),
+                catInfo.getCatLevel(),
+                startSort,
+                endSort,
+                catId
+            );
+            updateSortByStep(leafList, offset > 0 ? -1 : 1);
+        }
+
+        CategoryEntity category = new CategoryEntity();
+        category.setSort(targetSort);
+        category.setCatId(catId);
+
+        return update(category);
+    }
+
 }

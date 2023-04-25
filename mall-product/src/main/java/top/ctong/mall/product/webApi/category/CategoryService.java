@@ -87,11 +87,11 @@ public interface CategoryService {
     /**
      * 获取大于指定排序值的分类id
      *
-     * @param pId    父分类id
-     * @param level  层级
-     * @param sort   排序
+     * @param pId     父分类id
+     * @param level   层级
+     * @param sort    排序
      * @param endSort 排序结束范围
-     * @param ignore 忽略指定id
+     * @param ignore  忽略指定id
      * @return List<Long>
      * @author Clover You
      * @date 2023/4/20 23:16
@@ -129,5 +129,16 @@ public interface CategoryService {
      * @date 2023/4/22 23:08
      */
     int update(@NotNull CategoryEntity category);
+
+    /**
+     * 修改分类排序
+     *
+     * @param catId 分类id
+     * @param sort  排序
+     * @return int
+     * @author Clover You
+     * @date 2023/4/25 20:52
+     */
+    int updateSort(@NotNull Long catId, @NotNull Integer sort);
 
 }

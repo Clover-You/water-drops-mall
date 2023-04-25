@@ -88,9 +88,29 @@ public class CategoryController {
         return categoryService.info(catId);
     }
 
+    /**
+     * 修改分类信息
+     *
+     * @param category 分类信息
+     * @author Clover You
+     * @date 2023/4/25 21:13
+     */
     @PostMapping("/update")
     public void update(@RequestBody @Validated CategoryEntity category) {
         categoryService.update(category);
+    }
+
+    /**
+     * 修改指定分类排序信息
+     *
+     * @param catId 分类id
+     * @param sort  排序
+     * @author Clover You
+     * @date 2023/4/25 21:07
+     */
+    @PutMapping("/update/{catId}-{sort}")
+    public void updateSort(@PathVariable("catId") Long catId, @PathVariable("sort") Integer sort) {
+        categoryService.updateSort(catId, sort);
     }
 
 }
